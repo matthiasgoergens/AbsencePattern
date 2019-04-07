@@ -4,16 +4,18 @@ import Data.List (isInfixOf)
 import Data.Foldable (toList)
 
 isBad :: String -> Bool
-isBad hay = any (`isInfixOf` hay)
-  ["aa", "ala", "all", "lal", "lla", "lll"]
+isBad hay = any (`isInfixOf` hay) badPatterns
+
+badPatterns = ["aa", "ala", "all", "lal", "lla", "lll"]
+maxLen = maximum (map length badPatterns) - 1
 
 step :: Map String Integer -> Map String Integer
 step m =
-    DM.mapKeysWith (+) (take 2) .
+    DM.mapKeysWith (+) (take maxLen) .
     DM.filterWithKey (const . not . isBad) .
     DM.unionsWith (+) $
     map (\l -> DM.mapKeysWith (+) (l:) m) "ola"
 
 steps n = sum . DM.elems $ iterate step (DM.singleton "" 1) !! n
 
-main = mapM_ (print . (\n -> (n, steps n))) [0 .. 20]
+main = mapM_ (print . (\n -> (n, steps n))) [0 .. 100]
