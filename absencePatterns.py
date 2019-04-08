@@ -41,28 +41,7 @@ def numBad1(n):
         all = len('ola')**n
         good = sum(nextD.values())
         bad = all - good
-        return good
-
-
-def numBad2(n):
-    nextD = Counter([''])
-    # steps:
-    for _ in range(n):
-        nextD, d = Counter(), nextD
-
-        {key + letter: num for key, num in d.items() for letter in 'ola'}
-
-
-        for key in d:
-            for l in 'ola':
-                nextKey = key + l
-                if not isBad(nextKey):
-                    nextD[nextKey[-2:]] += d[key]
-    else:
-        all = len('ola')**n
-        good = sum(nextD.values())
-        bad = all - good
-        return good
+        return bad
 
 if __name__ == '__main__':
     # print(bads)
