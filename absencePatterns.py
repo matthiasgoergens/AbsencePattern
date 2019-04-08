@@ -3,6 +3,7 @@ import hypothesis.strategies as st
 
 
 def cart(x, y):
+    """Cartesian product with +"""
     for ix in x:
         for iy in y:
             yield (ix + iy)
@@ -12,23 +13,26 @@ def allPatterns(n, s):
     for _ in range(n):
         r = cart(r, s)
     return r
-bads = list(['aa'] + list(allPatterns(3, 'al')))
+
 bads = ["aa", "ala", "all", "lal", "lla", "lll"]
 
 def isBad(s):
     return any(b in s for b in bads)
 
 def allBad(bads, patterns):
+    """Brute force, select only penalty patterns out of all patterns"""
     return (p
      for p in patterns
      if any(b in p for b in bads))
 # print (list (allPatterns(3, "01")))
 def numBad(n):
+    """Brute force, number of penalty patterns"""
     return len(list(allBad(list(bads), allPatterns(n, "ola"))))
 
 
 from collections import defaultdict, Counter
 def numBad1(n):
+    """Sort-of dynamic programming solution for number of penalty patterns"""
     nextD = Counter([''])
     # steps:
     for _ in range(n):
